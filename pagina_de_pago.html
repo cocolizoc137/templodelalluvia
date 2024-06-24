@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        .item {
+            margin-bottom: 20px;
+        }
+        .total {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="carrito">
+    <h2>Carrito de Compras</h2>
+    <ul id="lista-carrito"></ul>
+    <p class="total">Total: $<span id="total">0</span></p>
+    <button onclick="pagar()">Pagar</button>
+    <button onclick="borrarCarrito()">Borrar</button>
+</div>
+
+<script>
+    let carrito = [];
+    let total = 0;
+
+    function agregarAlCarrito() {
+        if (arguments.length === 2) {
+            let item = arguments[0];
+            let precio = arguments[1];
+            carrito.push({ item, precio });
+            total += precio;
+        } else if (arguments.length === 3) {
+            let item = arguments[0];
+            let precio = arguments[1];
+            let inputId = arguments[2];
+            let cantidad = parseInt(document.getElementById(inputId).value);
+            let subtotal = precio * cantidad;
+            carrito.push({ item, precio, cantidad, subtotal });
+            total += subtotal;
+        }
+        actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+        let listaCarrito = document.getElementById('lista-carrito');
+        listaCarrito.innerHTML = '';
+        carrito.forEach(item => {
+            let li = document.createElement('li');
+            if (item.cantidad !== undefined && item.subtotal !== undefined) {
+                li.textContent = `${item.item} - Cantidad: ${item.cantidad} - Subtotal: $${item.subtotal}`;
+            } else {
+                li.textContent = `${item.item} - $${item.precio}`;
+            }
+            listaCarrito.appendChild(li);
+        });
+        document.getElementById('total').textContent = total;
+    }
+
+    function pagar() {
+        // Si el carrito está vacío, no se puede pagar
+        if (carrito.length === 0) {
+            alert("El carrito está vacío. Agrega algunos productos antes de pagar.");
+            return;
+        }
+        // Guardar el carrito en el almacenamiento local para recuperarlo después
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        // Redireccionar a la página de pago
+        window.location.href = "pagina_de_pago.html";
+    }
+
+    function borrarCarrito() {
+        carrito = [];
+        total = 0;
+        actualizarCarrito();
+    }
+</script>
+
+</body>
+</html>

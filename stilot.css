@@ -1,0 +1,28 @@
+#h_1{
+		margin: 30px;
+	padding: 15px;
+	text-align: center;
+	border:1px solid;
+
+background: -webkit-linear-gradient(top ,#000000,#000000,#000000);
+font: bold 26px verdana, sans-serif;
+
+}
+}
+#h_2{
+	background-color: red;
+}
+#s_2{
+	background-color:seagreen ;
+}
+#bd{
+
+	background-color: black;
+}
+#formulario-pago{
+
+
+
+
+	background-color: white;
+}
